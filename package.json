@@ -6,7 +6,9 @@
     "@hapi/hapi": "^20.2.2",
     "express": "^4.18.2",
     "hapi": "^18.1.0",
-    "mqtt": "^4.3.7"
+    "mqtt": "^4.3.7",
+    "now": "^19.1.2",
+    "socket.io": "^4.5.2"
   },
   "scripts": {
     "start": "node ./src/server.js",

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer Tim</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap.css">
+    <!-- <script src="js/stop.js"></script> -->
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+  <div class="row" style="padding-bottom: 5cm;">
+  </div>
+  <div class="row">
+      <div class="col">
+          <div class="" style="margin-left: -65px;">
+              <h1 class="title text-white">TIM 1</h1>
+              <div class="timer_info" id="timer1" style="padding-top: 70px;">00:00:00</div>
+            </div>
+      </div>
+      <div class="col">
+      </div>
+      <div class="col">
+          <div class="">
+            <h1 class="title text-white">TIM 2</h1>
+            <div class="timer_info" id="timer2" style="padding-top: 70px;">00:00:00</div>
+            </div>
+      </div>
+  </div>
+  <div class="row" style="padding-top: 155px;">
+      <div class="col">
+          <div class="" style="margin-left: -65px;">
+            <h1 class="title text-white">TIM 3</h1>
+            <div class="timer_info" id="timer3" style="padding-top: 70px;">00:00:00</div>
+          </div>
+      </div>
+      <div class="col">
+        <div class="btn justify-content-center " style="padding-top: 120px;">
+          <button id="start" style="border-radius: 30px;">Start</button>
+          <button id="stop" style="border-radius: 30px;">Stop</button>
+          <button id="reset"style="border-radius: 30px;">Reset</button>
+          <a class="btn btn-primary" href="/mobile/mobile.html" role="button">Mobile</a>
+          <!-- <button id="trigger" name="trigger" style="border-radius: 30px;">Trigger</button> -->
+        </div>
+      </div>
+      <div class="col">
+          <div class="">
+              <h1 class="title text-white" style="padding-top: 7.5px;">TIM 4</h1>
+              <div class="timer_info" id="timer4" style="padding-top: 70px;">00:00:00</div>              
+          </div>
+      </div>
+  </div>
+
+</div>
+    <!-- <script src="mqtt.js">
+      test();
+    </script> -->
+    <script>
+    var start = document.getElementById("start");
+    
+    var stop = document.getElementById("stop");
+    
+    var reset = document.getElementById("reset");
+    
+    var timer1 = document.getElementById("timer1");
+    var timer2 = document.getElementById("timer2");
+    var timer3 = document.getElementById("timer3");
+    var timer4 = document.getElementById("timer4");
+    
+    var timeInSec1 = 0;
+    var timeInSec2 = 0;
+    var timeInSec3 = 0;
+    var timeInSec4 = 0;
+    
+    start.addEventListener("click", start_time);
+    stop.addEventListener("click", stop_time);
+    reset.addEventListener("click", reset_time);
+    
+    var timer_interval1;
+    var timer_interval2;
+    var timer_interval3;
+    var timer_interval4;
+    
+    function start_time() {
+      if (timer_interval1) {
+        clearInterval(timer_interval1);
+      }
+      timer_interval1 = setInterval(function () {
+        timeInSec1 += 1;
+    
+        convertSecondsToTime1();
+      }, 10);
+
+      if (timer_interval2) {
+        clearInterval(timer_interval2);
+      }
+      timer_interval2 = setInterval(function () {
+        timeInSec2 += 1;
+    
+        convertSecondsToTime2();
+      }, 10);
+
+      if (timer_interval3) {
+        clearInterval(timer_interval3);
+      }
+      timer_interval3 = setInterval(function () {
+        timeInSec3+= 1;
+    
+        convertSecondsToTime3();
+      }, 10);
+
+      if (timer_interval4) {
+        clearInterval(timer_interval4);
+      }
+      timer_interval4 = setInterval(function () {
+        timeInSec4 += 1;
+    
+        convertSecondsToTime4();
+      }, 10);
+    }
+
+    function convertSecondsToTime1() {
+      given_seconds = timeInSec1;
+    
+      dateObj = new Date(given_seconds * 10);
+      minutes = dateObj.getUTCMinutes();
+      seconds = dateObj.getSeconds();
+      miliSeconds = dateObj.getMilliseconds();
+    
+      timeString =
+        minutes.toString().padStart(2, "0") +
+        ":" +
+        seconds.toString().padStart(2, "0") +
+        ":" +
+        (miliSeconds/10).toString().padStart(2, "0");
+    
+      timer1.textContent = timeString;
+    }
+
+    function convertSecondsToTime2() {
+      given_seconds = timeInSec2;
+    
+      dateObj = new Date(given_seconds * 10);
+      minutes = dateObj.getUTCMinutes();
+      seconds = dateObj.getSeconds();
+      miliSeconds = dateObj.getMilliseconds();
+    
+      timeString =
+        minutes.toString().padStart(2, "0") +
+        ":" +
+        seconds.toString().padStart(2, "0") +
+        ":" +
+        (miliSeconds/10).toString().padStart(2, "0");
+    
+      timer2.textContent = timeString;
+    }
+
+    function convertSecondsToTime3() {
+      given_seconds = timeInSec3;
+    
+      dateObj = new Date(given_seconds * 10);
+      minutes = dateObj.getUTCMinutes();
+      seconds = dateObj.getSeconds();
+      miliSeconds = dateObj.getMilliseconds();
+    
+      timeString =
+        minutes.toString().padStart(2, "0") +
+        ":" +
+        seconds.toString().padStart(2, "0") +
+        ":" +
+        (miliSeconds/10).toString().padStart(2, "0");
+  
+      timer3.textContent = timeString;     
+    }
+
+    function convertSecondsToTime4() {
+      given_seconds = timeInSec4;
+    
+      dateObj = new Date(given_seconds * 10);
+      minutes = dateObj.getUTCMinutes();
+      seconds = dateObj.getSeconds();
+      miliSeconds = dateObj.getMilliseconds();
+    
+      timeString =
+        minutes.toString().padStart(2, "0") +
+        ":" +
+        seconds.toString().padStart(2, "0") +
+        ":" +
+        (miliSeconds/10).toString().padStart(2, "0");
+    
+      timer4.textContent = timeString;
+    }
+    
+    function stop_time() {
+      clearInterval(timer_interval1);
+      clearInterval(timer_interval2);
+      clearInterval(timer_interval3);
+      clearInterval(timer_interval4);
+      timer1.classList.remove("shadow");
+      timer2.classList.remove("shadow");
+      timer3.classList.remove("shadow");
+      timer4.classList.remove("shadow");
+    }
+    
+    function reset_time() {
+      clearInterval(timer_interval1);
+      clearInterval(timer_interval2);
+      clearInterval(timer_interval3);
+      clearInterval(timer_interval4);
+      timer1.classList.remove("shadow");
+      timer2.classList.remove("shadow");
+      timer3.classList.remove("shadow");
+      timer4.classList.remove("shadow");
+      timeInSec1 = 0;
+      timeInSec2 = 0;
+      timeInSec3 = 0;
+      timeInSec4 = 0;
+      timer1.textContent = "00:00:00";
+      timer2.textContent = "00:00:00";
+      timer3.textContent = "00:00:00";
+      timer4.textContent = "00:00:00";
+    }
+
+    var socket = io();
+    var enc = new TextDecoder("utf-8");
+    var trigger;
+    socket.on('trigger',function(data,timer){
+      trigger = enc.decode(data)
+
+      if(trigger != null)
+      {
+        clearInterval(timer_interval1);
+        clearInterval(timer_interval2);
+        // clearInterval(timer_interval3);
+        // clearInterval(timer_interval4);
+        console.log(trigger);
+      }
+
+      // if(timer!=null)
+      // {
+      //   clearInterval(timer_interval1);
+      //   clearInterval(timer_interval2);
+      //   clearInterval(timer_interval3);
+      //   clearInterval(timer_interval4);
+      // }
+    });
+
+    socket.on('timer1',function(){
+      socket.emit('halo');
+      console.log("bisa");
+    });
+    </script>
+</body>
+</html>
+<!-- <div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="time_box">
+                <h1 class="title">TIM 1 <span>Slot 1</span></h1>
+                <div class="timer_info" id="timer1">00:00:00</div>
+              </div>
+        </div>
+        <div class="col">
+            <div class="time_box">
+                <h1 class="title">TIM 2 <span>Slot 2</span></h1>
+                <div class="timer_info" id="timer2">00:00:00</div>
+              </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="btn justify-content-center" style="padding-top: 1cm">
+            <button id="start" style="border-radius: 30px;">Start</button>
+            <button id="stop" style="border-radius: 30px;">Stop</button>
+            <button id="reset"style="border-radius: 30px;">Reset</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="time_box">
+                <h1 class="title">TIM 3 <span>Slot 3</span></h1>
+                <div class="timer_info" id="timer3">00:00:00</div>
+                </div>
+        </div>
+        <div class="col">
+            <div class="time_box">
+                <h1 class="title">TIM 4 <span>Slot 4</span></h1>
+                <div class="timer_info" id="timer4">00:00:00</div>              
+                </div>
+        </div>
+    </div>
+</div> -->
