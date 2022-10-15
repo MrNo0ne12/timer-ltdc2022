@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="bootstrap.css">
     <!-- <script src="js/stop.js"></script> -->
-    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+    <script src="socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
 </head>
-<body>
+<body style="background-image: url('timer.png');">
 <div class="container">
   <div class="row" style="padding-bottom: 5cm;">
   </div>
@@ -42,7 +42,7 @@
           <button id="start" style="border-radius: 30px;">Start</button>
           <button id="stop" style="border-radius: 30px;">Stop</button>
           <button id="reset"style="border-radius: 30px;">Reset</button>
-          <a class="btn btn-primary" href="/mobile/mobile.html" role="button">Mobile</a>
+          
           <!-- <button id="trigger" name="trigger" style="border-radius: 30px;">Trigger</button> -->
         </div>
       </div>
@@ -227,18 +227,34 @@
     var socket = io();
     var enc = new TextDecoder("utf-8");
     var trigger;
-    socket.on('trigger',function(data,timer){
+    var baksokonto = 0;
+    socket.on('trigger',function(data){
       trigger = enc.decode(data)
-
       if(trigger != null)
       {
-        clearInterval(timer_interval1);
-        clearInterval(timer_interval2);
-        // clearInterval(timer_interval3);
-        // clearInterval(timer_interval4);
+        if(trigger == 'analog1')
+        {
+          clearInterval(timer_interval1);
+        }
+        if(trigger == 'analog2')
+        {
+          clearInterval(timer_interval2);
+        }
+        if(trigger == 'analog3')
+        {
+          clearInterval(timer_interval3);
+        }
+        if(trigger == 'analog4')
+        {
+          baksokonto = 1
+          
+        }
+        if(trigger == 'analog3' && baksokonto == 1)
+          {
+            clearInterval(timer_interval4);
+          }
         console.log(trigger);
       }
-
       // if(timer!=null)
       // {
       //   clearInterval(timer_interval1);
@@ -247,11 +263,30 @@
       //   clearInterval(timer_interval4);
       // }
     });
+    socket.on('triggerindex',function(){
+      socket.emit('callbackindex')
+    })
 
-    socket.on('timer1',function(){
-      socket.emit('halo');
-      console.log("bisa");
+    socket.on('timerkonto',function(data){
+      console.log(data);
+      if(data == 'analog1')
+      {
+        clearInterval(timer_interval1);
+      }
+      else if(data == 'analog2')
+      {
+        clearInterval(timer_interval2);
+      }
+      else if(data == 'analog3')
+      {
+        clearInterval(timer_interval3);
+      }
+      else if(data == 'analog4')
+      {
+        clearInterval(timer_interval4);
+      }
     });
+   
     </script>
 </body>
 </html>

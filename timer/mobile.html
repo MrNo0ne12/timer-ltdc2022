@@ -12,6 +12,11 @@
         .row{
             padding: 25pt;
         }
+        #stop{
+            width: 100pt;
+            height: 100pt;
+            border-radius: 50pt;
+        }
     </style>
     <title>Document</title>
 </head>
@@ -24,22 +29,22 @@
             <input type="text" class="form-control" placeholder="Nama Tim" name="nama_tim" id="tim">
         </div>
         <div class="row">
-            <div class="timer" id="idtimer">00:00:00</div>
+              <select id="kategori" onchange="Pilih()">
+                <option value="0">-- Select Team --</option>
+                <option value="1">Analog Merah</option>
+                <option value="2">Analog Biru</option>
+                <option value="3">Analog Kuning</option>
+                <option value="4">Analog Hijau</option>
+                <option value="5">Mikro Merah</option>
+                <option value="6">Mikro Biru</option>
+                <option value="7">Mikro Kuning</option>
+                <option value="8">Mikro Hijau</option>
+              </select>
         </div>
         <div class="row">
-            <div class="col">
-                <button id="start" type="button" class="btn btn-light">Start</button>
-            </div>
-            <div class="col">
-                <button id="stop" type="button" class="btn btn-light">Stop</button>
-            </div>
-            <div class="col">
-                <button id="submit" type="button" class="btn btn-light">Submit</button>
-            </div>
+            
         </div>
-        <div class="row">
-            <button id="reset" type="button" class="btn btn-dark">Reset</button>
-        </div>
+        <button id="stop" type="button" class="btn btn-dark">Stop</button>
     </div>
 </body>
 </html>

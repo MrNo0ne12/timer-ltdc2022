@@ -7,21 +7,143 @@
     <title>Timer Tim</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="bootstrap.css">
-    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
-</head>
+    <script src="bootstrap.bundle.min.js"></script>
+    <link href="bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+    <style>
+      .row{
+          padding: 25pt;
+      }
+      #stop{
+          width: 100pt;
+          height: 100pt;
+          border-radius: 50pt;
+      }
+  </style>
+  </head>
 <body>
-    <button id="stip" onclick="stopTimer1()">STOP</button>
+  <div class="container text-center">
+    <div class="row">
+        <input type="text" class="form-control" placeholder="Nama Tim" name="nama_tim" id="tim">
+    </div>
+    <div class="row">
+          <select id="kategori" onchange="Pilih()">
+            <option value="0">-- Select Team --</option>
+            <option value="1">Analog Merah</option>
+            <option value="3">Analog Biru</option>
+            <option value="4">Analog Kuning</option>
+            <option value="2">Analog Hijau</option>
+            <option value="5">Mikro Merah</option>
+            <option value="7">Mikro Biru</option>
+            <option value="8">Mikro Kuning</option>
+            <option value="6">Mikro Hijau</option>
+          </select>
+    </div>
+    <div class="row">
+        
+    </div>
+    <button id="stop" type="button" class="btn btn-dark" onclick="stopTimer()">Stop</button>
+</div>
     
     <script>
+    
+    // var kategori = s.options[s.selectedIndex].value;
+    var ktg = 0;
     var socket = io();
 
-    function stopTimer1()
-        { 
-            socket.emit('timer1',function(){
-                socket.on('on');
-                console.log("bisa");
-    });
+    function Pilih()
+    {
+        var kategori = document.getElementById('kategori').value;
+        if(kategori == 1)
+        {
+            ktg = 'analog1';
         }
+        else if(kategori == 2)
+        {
+            ktg = 'analog2';
+        }
+        else if(kategori == 3)
+        {
+            ktg = 'analog3';
+        }
+        else if(kategori == 4)
+        {
+            ktg = 'analog4';
+        }
+        else if(kategori == 5)
+        {
+            ktg = 'mikro1';
+        }
+        else if(kategori == 6)
+        {
+            ktg = 'mikro2';
+        }
+        else if(kategori == 7)
+        {
+            ktg = 'mikro3';
+        }
+        else if(kategori == 8)
+        {
+            ktg = 'mikro4';
+        }
+    }
+
+    function stopTimer()
+        { 
+            socket.emit('callbacktimer',ktg);
+            console.log('callbacktimer');
+        }
+
+    // socket.on('mulai',function(){
+    //     start_time();
+    // })
+
+    var start = document.getElementById("start");
+    
+    var stop = document.getElementById("stop");
+    
+    var timer1 = document.getElementById("timer1");
+    
+    var timeInSec1 = 0;
+    
+    stop.addEventListener("click", stop_time);
+    
+    var timer_interval1;
+    
+    function start_time() {
+      if (timer_interval1) {
+        clearInterval(timer_interval1);
+      }
+      timer_interval1 = setInterval(function () {
+        timeInSec1 += 1;
+    
+        convertSecondsToTime1();
+      }, 10);
+    }
+
+    function convertSecondsToTime1() {
+      given_seconds = timeInSec1;
+    
+      dateObj = new Date(given_seconds * 10);
+      minutes = dateObj.getUTCMinutes();
+      seconds = dateObj.getSeconds();
+      miliSeconds = dateObj.getMilliseconds();
+    
+      timeString =
+        minutes.toString().padStart(2, "0") +
+        ":" +
+        seconds.toString().padStart(2, "0") +
+        ":" +
+        (miliSeconds/10).toString().padStart(2, "0");
+    
+      timer1.textContent = timeString;
+    }
+    
+    function stop_time() {
+      clearInterval(timer_interval1);
+      timer1.classList.remove("shadow");
+    }
+
     </script>
 </body>
 </html>

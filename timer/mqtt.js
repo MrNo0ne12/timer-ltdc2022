@@ -1,6 +1,6 @@
 const mqtt = require('mqtt')
 
-const host = 'broker.mqtt-dashboard.com'
+const host = '192.168.1.250'
 const port = '1883'
 const clientId = `CSiot1015`
 
@@ -46,12 +46,26 @@ const server = http.createServer(requestListener);
 // });
 
 var io = require('socket.io')(server);
+var timer;
 
 io.on('connection', function(socket) {
-client.on('message', (topic, payload,timer) => {
-  socket.broadcast.emit('trigger',payload);
-  // socket.emit('timer',timer);
-  }) 
+client.on('message', (topic, payload) => {
+  socket.emit('trigger',payload);
+  })
+  
+socket.emit('triggerindex');
+
+socket.on('callbacktimer',function(data){
+  timer = data;
+  console.log('callbacktimer' + timer + data)
+  })
+
+socket.on('callbackindex',function(){
+  setInterval(function(){
+    socket.emit('timerkonto',timer);
+    timer = 0 
+  }, 100);
+})
 });
 
 client.on('message', (topic, payload) => {
