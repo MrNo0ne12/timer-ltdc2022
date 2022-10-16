@@ -7,6 +7,7 @@
     <title>Timer Tim</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="bootstrap.css">
+    <script src="bootstrap.bundle.min.js"></script>
     <!-- <script src="js/stop.js"></script> -->
     <script src="socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
 </head>
@@ -17,41 +18,82 @@
   <div class="row">
       <div class="col">
           <div class="" style="margin-left: -65px;">
-              <h1 class="title text-white">TIM 1</h1>
-              <div class="timer_info" id="timer1" style="padding-top: 70px;">00:00:00</div>
-            </div>
+              <h1 id="team_1" class="title text-white" >TIM 1</h1>
+              <div class="timer_info" id="timer1" style="padding-top: 70px; margin-left: -125px;">00:00:00</div>
+          </div>
       </div>
       <div class="col">
-      </div>
-      <div class="col">
-          <div class="">
-            <h1 class="title text-white">TIM 2</h1>
-            <div class="timer_info" id="timer2" style="padding-top: 70px;">00:00:00</div>
+          <div class="" style="margin-left: 230px;">
+            <h1 id="team_2" class="title text-white">TIM 2</h1>
+            <div class="timer_info" id="timer2" style="padding-top: 70px; margin-left: 25px;">00:00:00</div>
             </div>
       </div>
   </div>
   <div class="row" style="padding-top: 155px;">
       <div class="col">
           <div class="" style="margin-left: -65px;">
-            <h1 class="title text-white">TIM 3</h1>
-            <div class="timer_info" id="timer3" style="padding-top: 70px;">00:00:00</div>
+            <h1 id="team_3" class="title text-white" >TIM 3</h1>
+            <div class="timer_info" id="timer3" style="padding-top: 70px; margin-left: -125px;">00:00:00</div>
           </div>
       </div>
       <div class="col">
-        <div class="btn justify-content-center " style="padding-top: 120px;">
-          <button id="start" style="border-radius: 30px;">Start</button>
-          <button id="stop" style="border-radius: 30px;">Stop</button>
-          <button id="reset"style="border-radius: 30px;">Reset</button>
-          
-          <!-- <button id="trigger" name="trigger" style="border-radius: 30px;">Trigger</button> -->
+          <div class="" style="margin-left: 230px;">
+              <h1 id="team_4" class="title text-white" style="padding-top: 7.5px;">TIM 4</h1>
+              <div class="timer_info" id="timer4" style="padding-top: 70px; margin-left: 25px;">00:00:00</div>              
+          </div>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="btn justify-content-center " style="padding-top: 80px;">
+        <button id="start" style="border-radius: 30px;">Start</button>
+        <button id="stop" style="border-radius: 30px;">Stop</button>
+        <button id="reset"style="border-radius: 30px;">Reset</button>
+        <button type="button" style="border-radius: 30px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
+        
+        <!-- <button id="trigger" name="trigger" style="border-radius: 30px;">Trigger</button> -->
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Nama Team</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+          <div class="modal-body">
+            <div class="container" style="margin-top: 25px;">
+              <div class="row align-items-start">
+                <div class="col">
+                  <p>TIM Merah</p>
+                  <input type="text" id="team1" style="border-radius: 25;">
+                </div>
+                <div class="col">
+                  <p>TIM Hijau</p>
+                  <input type="text" id="team2" style="border-radius: 25;">
+                </div>
+                <div class="col">
+                  <p>TIM Biru</p>
+                  <input type="text" id="team3" style="border-radius: 25;">
+                </div>
+                <div class="col">
+                  <p>TIM Kuning</p>
+                  <input type="text" id="team4" style="border-radius: 25;">
+                </div>
+              </div>
+              <div class="row" style="margin-top: 25px;">
+                <button type="button" class="btn btn-dark"  onclick="setTeam()">Set Nama Team</button>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Simpan</button>
         </div>
       </div>
-      <div class="col">
-          <div class="">
-              <h1 class="title text-white" style="padding-top: 7.5px;">TIM 4</h1>
-              <div class="timer_info" id="timer4" style="padding-top: 70px;">00:00:00</div>              
-          </div>
-      </div>
+    </div>
   </div>
 
 </div>
@@ -59,6 +101,16 @@
       test();
     </script> -->
     <script>
+    function setTeam() {
+      var bk1 = document.getElementById('team1').value;
+      document.getElementById('team_1').textContent=bk1;
+      var bk2 = document.getElementById('team2').value;
+      document.getElementById('team_2').textContent=bk2;
+      var bk3 = document.getElementById('team3').value;
+      document.getElementById('team_3').textContent=bk3;
+      var bk4 = document.getElementById('team4').value;
+      document.getElementById('team_4').textContent=bk4;
+    }
     var start = document.getElementById("start");
     
     var stop = document.getElementById("stop");
@@ -246,13 +298,13 @@
         }
         if(trigger == 'analog4')
         {
-          baksokonto = 1
-          
+          // baksokonto = 1
+          clearInterval(timer_interval4);
         }
-        if(trigger == 'analog3' && baksokonto == 1)
-          {
-            clearInterval(timer_interval4);
-          }
+        // if(trigger == 'analog3' && baksokonto == 1)
+        //   {
+        //     clearInterval(timer_interval4);
+        //   }
         console.log(trigger);
       }
       // if(timer!=null)
@@ -266,6 +318,7 @@
     socket.on('triggerindex',function(){
       socket.emit('callbackindex')
     })
+
 
     socket.on('timerkonto',function(data){
       console.log(data);
@@ -285,6 +338,7 @@
       {
         clearInterval(timer_interval4);
       }
+      socket.emit('jadinol')
     });
    
     </script>
