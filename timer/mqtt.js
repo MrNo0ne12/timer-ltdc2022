@@ -63,7 +63,7 @@ socket.on('callbacktimer',function(data){
 socket.on('callbackindex',function(){
   setInterval(function(){
     socket.emit('timerkonto',timer);
-  }, 100);
+  }, 50);
   socket.on('jadinol',function(){
     timer = 0;
   })
